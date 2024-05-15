@@ -1,5 +1,6 @@
 <script>
 	import Modal from './Modal.svelte';
+	import AddPersonForm from './AddPersonForm.svelte';
 
 	let firstName = "Isaac"; 
 	let lastName = "Nguyen";
@@ -32,26 +33,34 @@
 
 	// Conditionals
 	let num = 5;
+
+	let showModal = false;
+	
+	const toggleModal = () => {
+		showModal = !showModal;
+	};
+
+	const addPersonHandler = (e) => {
+		console.log(e.detail);
+		const person = e.detail;
+
+		people = [people, ...people];
+		showModal = false;
+	};
+
 </script>
 
 <!-- Conditionals -->
-<!-- {#if num > 20} 
-	<p>Greater than 20</p>
-{:else if num > 5} 
-	<p>Greater than 5</p>
-{:else}
-	<p>Less than or equal to 5</p>
-{/if} -->
 
+<!-- Components + Props -->
+<Modal message="Sign Up for Offers!" {showModal} on:click={toggleModal}> 
+	<AddPersonForm on:addPerson={addPersonHandler}/>
+</Modal>
 
-<!-- Components -->
-
-<Modal />
 
 <main>
 
 	<h1>Svelte Basics</h1>
-
 	<!-- Basics -->
 	<p>{fullName} - {beltColour} belt</p>
 	<input type="text" bind:value={firstName}> 
@@ -78,7 +87,10 @@
 	{:else}
 		<p>There are no people to display..</p>
 	{/each}
+	
+	<!-- Event Forwarding + Props -->
 
+	<button on:click={toggleModal}>Open Modal</button>
 </main>
 
 <style>

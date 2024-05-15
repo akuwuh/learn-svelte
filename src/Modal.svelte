@@ -1,12 +1,26 @@
+
 <script>
-    let showModal = true;
-    let isPromo = true;
+    // Props
+    export let message = 'default value';
+    export let isPromo = false;
+    export let showModal = false;
+
+    // Event Modifiers:
+    // once -> makes sure that event can only be fired once
+    // preventDefault -> prevents default behaviour of the event (e.g form submission)
+    // self -> only fires if the event is fired on the element itself, not on a child element
+
 </script>
+
+<!-- Conditionals -->
 {#if showModal}
     <!-- class becomes isPromo if isPromo is true -->
-    <div class="backdrop" class:promo={isPromo}> 
+    <div class="backdrop" class:promo={isPromo} on:click|self> 
         <div class="modal">
-            <p>Sign up for Offers</p>
+
+            <!-- Slots -->
+            <slot></slot>
+
         </div>
     </div>
 {/if}
